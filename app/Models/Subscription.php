@@ -10,7 +10,7 @@ class Subscription extends Model
     use HasFactory;
 
     protected $fillable = [
-        'plan_id', 'subscription_status',
+        'plan_id', 'subscription_status', 'user_id',
         'status', 'subcribed_for', 'subscription_code',
         'subscribed_on', 'next_charged_date'
     ];

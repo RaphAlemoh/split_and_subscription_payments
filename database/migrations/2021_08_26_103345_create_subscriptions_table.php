@@ -15,13 +15,21 @@ class CreateSubscriptionsTable extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
             $table->integer('plan_id');
-            $table->string('subscription_status');
-            $table->string('status')->default(0);
-            $table->string('subcribed_for');
-            $table->string('subscription_code');
-            $table->string('subscribed_on');
-            $table->string('next_charged_date');
+            $table->string('subcribed_for')->nullable();
+            $table->string('subscription_code')->nullable();
+            $table->string('subscribed_on')->nullable();
+            $table->string('next_charged_date')->nullable();
+            $table->string('reference')->nullable();
+            $table->string('authorization_code')->nullable();
+            $table->string('next_payment_date')->nullable();
+            $table->string('signature')->nullable();
+            $table->string('customer_code')->nullable();
+            $table->string('transaction')->nullable();
+            $table->integer('status')->default(0);
+            $table->dateTimeTz('sub_created_at')->nullable();
+            $table->dateTimeTz('paid_at')->nullable();
             $table->timestamps();
         });
     }

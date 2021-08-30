@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Paystack;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
-use Paystack;
-use Auth;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
@@ -25,11 +26,25 @@ class PaymentController extends Controller
         }
     }
 
-    public function handle_gateway_callback(Request $request)
+    public function handle_gateway_callback()
     {
-        $paymentDetails = Paystack::getPaymentData();
-        return $paymentDetails;
-        // return redirect()->back();
+        $user = Auth::user();
+        $subscriptionResponse = Paystack::getPaymentData();
+        if ($subscriptionResponse['data']['status'] == "true") {
+
+            return $subscriptionResponse;
+            // $user = Subscription::findOrFail($user_id)
+            //     ->where([
+            //         'email' => $paymentDetails['data']['customer']['email'],
+            //         'id' => $user_id
+            //     ])
+            //     ->update(['transaction' => 'PAID']);
+            // if ($studentDetails) {
+            //     return redirect()->route('games');
+            // } else {
+            //     return 'Please contact the administrator! Please dont attempt paying again if your bank has charged';
+            // }
+        }
     }
 
 

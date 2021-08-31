@@ -7,22 +7,28 @@ use Paystack;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class PaymentController extends Controller
 {
 
     public function redirect_to_gateway(Request $request)
     {
-        $user = Auth::user();
-        $this->validate($request, [
-            'reference' => 'string',
-        ]);
-        $data['plan_id'] =  $request->plan_id;
-        $data['user_id'] =  $user->id;
-        $data['reference'] =  $request->reference;
-        $initiate_subscription = Subscription::create($data);
-        if ($initiate_subscription) {
-            return Paystack::getAuthorizationUrl()->redirectNow();
+
+        try {
+            $user = Auth::user();
+            $this->validate($request, [
+                'reference' => 'string',
+            ]);
+            $data['plan_id'] =  $request->plan_id;
+            $data['user_id'] =  $user->id;
+            $data['reference'] =  $request->reference;
+            $initiate_subscription = Subscription::create($data);
+            if ($initiate_subscription) {
+                return Paystack::getAuthorizationUrl()->redirectNow();
+            }
+        } catch (\Exception $e) {
+            return Redirect::back()->withMessage(['msg' => 'The paystack token has expired. Please refresh the page and try again.', 'type' => 'error']);
         }
     }
 
@@ -30,6 +36,7 @@ class PaymentController extends Controller
     {
         $user = Auth::user();
         $subscriptionResponse = Paystack::getPaymentData();
+        dd($subscriptionResponse);
         if ($subscriptionResponse['data']['status'] == "true") {
 
             return $subscriptionResponse;

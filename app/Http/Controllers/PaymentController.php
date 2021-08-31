@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use Paystack;
-use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Subscription;
+use Auth;
+use Paystack;
 
 class PaymentController extends Controller
 {
@@ -34,23 +34,18 @@ class PaymentController extends Controller
 
     public function handle_gateway_callback()
     {
-        $user = Auth::user();
-        $subscriptionResponse = Paystack::getPaymentData();
-        dd($subscriptionResponse);
-        if ($subscriptionResponse['data']['status'] == "true") {
-
-            return $subscriptionResponse;
-            // $user = Subscription::findOrFail($user_id)
-            //     ->where([
-            //         'email' => $paymentDetails['data']['customer']['email'],
-            //         'id' => $user_id
-            //     ])
-            //     ->update(['transaction' => 'PAID']);
-            // if ($studentDetails) {
-            //     return redirect()->route('games');
-            // } else {
-            //     return 'Please contact the administrator! Please dont attempt paying again if your bank has charged';
-            // }
+        $paymentDetails = Paystack::getPaymentData();
+        if ($paymentDetails['data']['status'] == "success") {
+            $updateSubscriber = Subscription::where([
+                'user_id' => Auth::user()->id,
+                'reference' => $paymentDetails['data']['reference']
+            ])
+                ->update(['transaction' => 'PAID']);
+            if ($updateSubscriber) {
+                return redirect()->route('games');
+            } else {
+                return 'Please contact the administrator! Please dont attempt paying again if your bank has charged';
+            }
         }
     }
 
@@ -68,6 +63,7 @@ class PaymentController extends Controller
                 'createdAt' => date("Y-m-d H:i:s", strtotime($event['data']['created_at'])),
                 'paidAt' => date("Y-m-d H:i:s", strtotime($event['data']['paidAt'])),
                 'transaction' => 'PAID',
+                'next_payment_date' => date("Y-m-d H:i:s", strtotime($event['data']['next_payment_date'])),
                 'status' => 1
             ]);
             if ($updateSubscriber) {
@@ -92,7 +88,10 @@ class PaymentController extends Controller
         } elseif ($event['event'] === "invoice.update") {
             Log::info($event);
         } else {
-            Log::info($event);
+            $reference  = $event['data']['reference'];
+            $updateSubscriber =  Subscription::where(['reference' => $reference])->update([
+                'status' => 0
+            ]);
         }
     }
 }

@@ -29,7 +29,6 @@ class CreateSubscriptionsTable extends Migration
             $table->string('transaction')->nullable();
             $table->integer('status')->default(0);
             $table->dateTimeTz('sub_created_at')->nullable();
-            $table->dateTimeTz('created_at')->nullable();
             $table->dateTimeTz('paid_at')->nullable();
             $table->timestamps();
         });

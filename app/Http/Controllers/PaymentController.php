@@ -17,7 +17,7 @@ class PaymentController extends Controller
     {
         try {
             $user = Auth::user();
-            $check_if_subscriber_exist  = Subscription::where('user_id', $user->id)->get();
+            $check_if_subscriber_exist  = Subscription::where(['user_id' => $user->id])->get();
             if(count($check_if_subscriber_exist) == 0){
                 $this->validate($request, [
                     'reference' => 'string',
@@ -43,11 +43,8 @@ class PaymentController extends Controller
         if ($paymentDetails['data']['status'] == "success") {
             $updateSubscriber = Subscription::where([
                 'user_id' => Auth::user()->id,
-                'reference' => $paymentDetails['data']['reference'],
-                'status' => 1
-
-            ])
-                ->update(['transaction' => 'PAID']);
+                'reference' => $paymentDetails['data']['reference']
+            ])->update(['transaction' => 'PAID']);
             if ($updateSubscriber) {
                 return redirect()->route('games');
             } else {

@@ -65,8 +65,8 @@ class PaymentController extends Controller
                 'authorization_code' => $webhook_response['data']['authorization']['authorization_code'],
                 'signature' => $webhook_response['data']['authorization']['signature'],
                 'customer_code' => $webhook_response['data']['customer']['customer_code'],
-                'createdAt' => date("Y-m-d H:i:s", strtotime($webhook_response['data']['created_at'])),
-                'paidAt' => date("Y-m-d H:i:s", strtotime($webhook_response['data']['paidAt'])),
+                'created_at' => date("Y-m-d H:i:s", strtotime($webhook_response['data']['created_at'])),
+                'paid_at' => date("Y-m-d H:i:s", strtotime($webhook_response['data']['paidAt'])),
             ]);
             if ($updateSubscriber) {
                 return response()->json(200);
@@ -78,8 +78,8 @@ class PaymentController extends Controller
                 'customer_code' => $webhook_response['data']['customer']['customer_code'],
                 'next_payment_date' => $webhook_response['data']['next_payment_date'],
                 'subscriptionCode' => $webhook_response['data']['subscription_code'],
-                'createdAt' => date("Y-m-d H:i:s", strtotime($webhook_response['data']['created_at'])),
-                'paidAt' => date("Y-m-d H:i:s", strtotime($webhook_response['data']['paidAt']))
+                'created_at' => date("Y-m-d H:i:s", strtotime($webhook_response['data']['created_at'])),
+                'paid_at' => date("Y-m-d H:i:s", strtotime($webhook_response['data']['paidAt']))
             ]);
             if ($updateSubscriber) {
                 return response()->json(200);

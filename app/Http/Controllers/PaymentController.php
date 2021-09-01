@@ -58,6 +58,7 @@ class PaymentController extends Controller
     {
         $data = json_encode($request->all());
         $webhook_response = json_decode($data, true);
+        return $webhook_response;
         $user  = User::where('email', $webhook_response['data']['customer']['email'])->get();
         if ($webhook_response['event'] === "charge.success") {
             $updateSubscriber =  Subscription::where(['user_id' => $user->id])->update([

@@ -22,11 +22,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/payment/callback', [PaymentController::class, 'handle_gateway_callback']);
 
-    Route::post('/payment/webhook', [PaymentController::class, 'handle_gateway_callback']);
-
     Route::get('/games', [GameController::class, 'games'])->name('games');
 });
 
+Route::post('/payment/webhook', [PaymentController::class, 'handle_web_hook']);
 
 
 require __DIR__ . '/auth.php';

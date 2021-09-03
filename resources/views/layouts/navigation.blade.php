@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('games')" :active="request()->routeIs('games')">
                         {{ __('Games') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('packages')" :active="request()->routeIs('packages')">
+                        {{ __('Packages') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -70,6 +73,15 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('available.subscriptions')" :active="request()->routeIs('available.subscriptions')">
+                {{ __('Available Subscriptions') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('games')" :active="request()->routeIs('games')">
+                {{ __('Games') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('packages')" :active="request()->routeIs('packages')">
+                {{ __('Packages') }}
             </x-responsive-nav-link>
         </div>
 

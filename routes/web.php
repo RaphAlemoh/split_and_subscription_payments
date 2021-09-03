@@ -3,6 +3,7 @@
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\PackageController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,6 +24,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/payment/callback', [PaymentController::class, 'handle_gateway_callback']);
 
     Route::get('/games', [GameController::class, 'games'])->name('games');
+
+    Route::get('/packages', [PackageController::class, 'packages'])->name('packages');
 });
 
 Route::post('/payment/webhook', [PaymentController::class, 'handle_web_hook']);

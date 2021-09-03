@@ -7,6 +7,8 @@
     <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
     <input type="hidden" name="plan" value="{{ $plan->plan_code  }}"> {{-- required --}}
     {{-- <input type="hidden" name="key" value="{{ config('paystack.secretKey') }}"> --}}
+    <input type="hidden" name="metadata" value="{{ json_encode($array = ['payment_type' => 'split',]) }}">
+
     <p>
         <a class="text-blue-400 inline-flex items-center">
             <button type="submit" class="flex-shrink-0 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-10 sm:mt-0">

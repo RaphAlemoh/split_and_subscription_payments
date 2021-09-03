@@ -13,7 +13,7 @@
     <p>
         <a class="text-blue-400 inline-flex items-center">
             <button type="submit" class="flex-shrink-0 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-10 sm:mt-0">
-                Subscribe Now!!!
+                Buy Now!!!
                 </svg>
             </button>
         </a>

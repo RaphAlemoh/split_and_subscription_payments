@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePackagesTable extends Migration
+class CreateAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreatePackagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('packages', function (Blueprint $table) {
+        Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->string('name');
-            $table->string('amount');
-            $table->string('description');
-            $table->string('type');
-            $table->string('author');
-            $table->string('status')->default(0);
+            $table->double('percentage_charge')->default(0.2);
+            $table->string('reference')->nullable();
+            $table->string('subaccount_code')->nullable();
+            $table->boolean('is_verified')->default(0);
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class CreatePackagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('packages');
+        Schema::dropIfExists('accounts');
     }
 }

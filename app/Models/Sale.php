@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Package extends Model
+class Sale extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name', 'amount', 'author',
-        'description', 'user_id',
-        'type', 'status'
+        'package_id',  'reference',  'user_id',
     ];
+
 
 
     public function user()
@@ -22,4 +21,8 @@ class Package extends Model
     }
 
 
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
+    }
 }

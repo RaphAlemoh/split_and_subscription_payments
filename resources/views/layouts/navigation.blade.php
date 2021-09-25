@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('packages')" :active="request()->routeIs('packages')">
                         {{ __('Packages') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('subaccount')" :active="request()->routeIs('subaccount')">
+                        {{ __('Subaccount') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -82,6 +85,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('packages')" :active="request()->routeIs('packages')">
                 {{ __('Packages') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('subaccount')" :active="request()->routeIs('subaccount')">
+                {{ __('Subaccount') }}
             </x-responsive-nav-link>
         </div>
 

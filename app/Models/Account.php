@@ -5,21 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Package extends Model
+class Account extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name', 'amount', 'author',
-        'description', 'user_id',
-        'type', 'status'
+        'user_id', 'subaccount_code', 'is_verified', 'reference',
     ];
 
-
-    public function user()
-    {
+    public function user(){
         return $this->belongsTo(User::class);
     }
-
-
 }
